@@ -1,0 +1,79 @@
+### Bibliotecas
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+
+from pandas import DataFrame
+
+### Carregando os dados
+
+caminho = "consulta_cand_2018_BRASIL.txt"
+dados2018 = pd.read_csv(caminho,engine="python",sep="\t") 
+dados2018 = pd.DataFrame(dados2018)
+dados2018.columns
+
+### filtros para os candidatos aptos
+
+dados2018 = dados2018.query('DS_SITUACAO_CANDIDATURA == "APTO"')
+dados2018.head(5)
+
+### Gráfico por gênero
+
+dados2018.groupby(['DS_GENERO']).size().plot(kind='pie',subplots=True,autopct='%.2f',colors = ['purple', 'gray'])
+plt.title('Candidaturas segundo gênero 2018')
+plt.xlabel('') 
+plt.ylabel('')
+plt.savefig('genero2018.jpeg',bbox_inches='tight',dpi=200)
+
+### Gráfico e tabela por estado
+
+dados2018.groupby(['NM_UE','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack().sort_values('FEMININO').plot(kind='bar',stacked=False,color = ['purple', 'gray'])
+plt.xlabel('Estado') 
+plt.ylabel('% dos candidatos') 
+plt.title('Candidaturas segundo gênero e estado 2018') 
+
+plt.savefig('EstadosXGenero 2018.jpeg',bbox_inches='tight',dpi=200)
+
+tabela1 = (dados2018.groupby(['NM_UE','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack())
+print(tabela1.sort_values('FEMININO').round(2))
+
+
+### Gráfico e tabela por partido
+
+dados2018.groupby(['SG_PARTIDO','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack().sort_values('FEMININO').plot(kind='bar',stacked=False,color = ['purple', 'gray'])
+
+plt.xlabel('Partidos') 
+plt.ylabel('% dos candidatos') 
+plt.title('Candidaturas segundo gênero e partido 2018') 
+
+plt.savefig('C:/Users/Laris/Desktop/Medium/Projetos_R/PartidoXGenero2018.jpeg',bbox_inches='tight',dpi=150,orientation='portrait')
+tabela1 = (dados2018.groupby(['SG_PARTIDO','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack())
+
+print(tabela1.sort_values('FEMININO').round(2))
+
+### Gráfico e tabela por cargo
+
+dados2018.groupby(['DS_CARGO','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack().sort_values('FEMININO').plot(kind='barh',stacked=False,color = ['purple', 'gray'])
+
+plt.xlabel('Cargos') 
+plt.ylabel('% dos candidatos') 
+plt.title('Candidaturas segundo gênero e cargo 2018')
+plt.savefig('C:/Users/Laris/Desktop/Medium/Projetos_R/CargoXGenero2018.jpeg',bbox_inches='tight',dpi=150,orientation='portrait')
+
+tabela1 = (dados2018.groupby(['DS_CARGO','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack())
+
+print(tabela1.sort_values('FEMININO').round(2))
