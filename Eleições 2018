@@ -54,7 +54,7 @@ plt.xlabel('Partidos')
 plt.ylabel('% dos candidatos') 
 plt.title('Candidaturas segundo gênero e partido 2018') 
 
-plt.savefig('C:/Users/Laris/Desktop/Medium/Projetos_R/PartidoXGenero2018.jpeg',bbox_inches='tight',dpi=150,orientation='portrait')
+plt.savefig('PartidoXGenero2018.jpeg',bbox_inches='tight',dpi=150,orientation='portrait')
 tabela1 = (dados2018.groupby(['SG_PARTIDO','DS_GENERO']).size().groupby(level=0).apply(
     lambda x: 100 * x / x.sum()
 ).unstack())
@@ -70,7 +70,7 @@ dados2018.groupby(['DS_CARGO','DS_GENERO']).size().groupby(level=0).apply(
 plt.xlabel('Cargos') 
 plt.ylabel('% dos candidatos') 
 plt.title('Candidaturas segundo gênero e cargo 2018')
-plt.savefig('C:/Users/Laris/Desktop/Medium/Projetos_R/CargoXGenero2018.jpeg',bbox_inches='tight',dpi=150,orientation='portrait')
+plt.savefig('CargoXGenero2018.jpeg',bbox_inches='tight',dpi=150,orientation='portrait')
 
 tabela1 = (dados2018.groupby(['DS_CARGO','DS_GENERO']).size().groupby(level=0).apply(
     lambda x: 100 * x / x.sum()
