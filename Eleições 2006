@@ -1,0 +1,127 @@
+### Bibliotecas
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+
+from pandas import DataFrame
+
+### Carregando os dados
+
+caminho1 = "consulta_cand_2006_AC.txt"
+ac = pd.read_csv(caminho1, sep=';', encoding='ANSI',header=None) 
+caminho2 = "consulta_cand_2006_AL.txt"
+al = pd.read_csv(caminho2, sep=';', encoding='ANSI', header=None)
+caminho3 = "consulta_cand_2006_AM.txt"
+am = pd.read_csv(caminho3, sep=';', encoding='ANSI', header=None)
+caminho4 = "consulta_cand_2006_AP.txt"
+ap = pd.read_csv(caminho4, sep=';', encoding='ANSI', header=None)
+caminho5 = "consulta_cand_2006_BA.txt"
+ba = pd.read_csv(caminho5, sep=';', encoding='ANSI', header=None)
+caminho6 = "consulta_cand_2006_CE.txt"
+ce = pd.read_csv(caminho6, sep=';', encoding='ANSI', header=None)
+caminho7 = "consulta_cand_2006_ES.txt"
+es = pd.read_csv(caminho7, sep=';', encoding='ANSI', header=None)
+caminho8 = "consulta_cand_2006_GO.txt"
+go = pd.read_csv(caminho8, sep=';', encoding='ANSI', header=None)
+caminho9 = "consulta_cand_2006_MA.txt"
+ma = pd.read_csv(caminho9, sep=';', encoding='ANSI', header=None)
+caminho10 = "consulta_cand_2006_MG.txt"
+mg = pd.read_csv(caminho10, sep=';', encoding='ANSI', header=None)
+caminho11 = "consulta_cand_2006_MS.txt"
+ms = pd.read_csv(caminho11, sep=';', encoding='ANSI', header=None)
+caminho12 = "consulta_cand_2006_MT.txt"
+mt = pd.read_csv(caminho12, sep=';', encoding='ANSI', header=None)
+caminho13 = "consulta_cand_2006_PA.txt"
+pa = pd.read_csv(caminho13, sep=';', encoding='ANSI', header=None)
+caminho14 = "consulta_cand_2006_PB.txt"
+pb = pd.read_csv(caminho14, sep=';', encoding='ANSI', header=None)
+caminho15 = "consulta_cand_2006_PE.txt"
+pe = pd.read_csv(caminho15, sep=';', encoding='ANSI', header=None)
+caminho16 = "consulta_cand_2006_PI.txt"
+pi = pd.read_csv(caminho16, sep=';', encoding='ANSI', header=None)
+caminho17 = "consulta_cand_2006_PR.txt"
+pr = pd.read_csv(caminho17, sep=';', encoding='ANSI', header=None)
+caminho18 = "consulta_cand_2006_RJ.txt"
+rj = pd.read_csv(caminho18, sep=';', encoding='ANSI', header=None)
+caminho19 = "consulta_cand_2006_RN.txt"
+rn = pd.read_csv(caminho19, sep=';', encoding='ANSI', header=None)
+caminho20 = "consulta_cand_2006_RO.txt"
+ro = pd.read_csv(caminho20, sep=';', encoding='ANSI', header=None)
+caminho21 = "consulta_cand_2006_RR.txt"
+rr = pd.read_csv(caminho21, sep=';', encoding='ANSI', header=None)
+caminho22 = "consulta_cand_2006_RS.txt"
+rs = pd.read_csv(caminho22, sep=';', encoding='ANSI', header=None)
+caminho23 = "consulta_cand_2006_SC.txt"
+sc = pd.read_csv(caminho23, sep=';', encoding='ANSI', header=None)
+caminho24 = "consulta_cand_2006_SE.txt"
+se = pd.read_csv(caminho24, sep=';', encoding='ANSI', header=None)
+caminho25 = "consulta_cand_2006_SP.txt"
+sp = pd.read_csv(caminho25, sep=';', encoding='ANSI', header=None)
+caminho26 = "consulta_cand_2006_TO.txt"
+to = pd.read_csv(caminho26, sep=';', encoding='ANSI', header=None)
+
+todos = pd.concat([ac,al,am,ap,ba,ce,es,go,ma,mg,ms,mt,pa,pb,pe,pi,pr,rj,rn,ro,rr,rs,sc,se,sp,to])
+
+dados2006 = pd.DataFrame(todos)
+len(dados2006.columns)
+
+### Ajustes e Filtros
+
+dados2006 = dados2006.rename(columns = {0:'DT_GERACAO',1: 'HH_GERACAO', 2:'ANO_ELEICAO', 3:'NR_TURNO',4: 'DS_ELEICAO',
+       5:'SG_UF', 6:'SG_UE', 7:'NM_UE', 8:'CD_CARGO', 9:'DS_CARGO',
+       10:'NM_CANDIDATO',11:'SQ_CANDIDATO', 12:'NR_CANDIDATO',13:'NR_CPF_CANDIDATO', 14:'NM_URNA_CANDIDATO',
+       15:'CD_SITUACAO_CANDIDATURA', 16:'DS_SITUACAO_CANDIDATURA',
+       17:'NR_PARTIDO', 18:'SG_PARTIDO',19: 'NM_PARTIDO', 20:'CD_LEGENDA',21: 'SG_LEGENDA',22:'CP_LEGENDA', 
+        23:'NM_LEGENDA',24:'CD_OCUPACAO',25:'DS_OCUPACAO',26:'DT_NASCIMENTO',27:'NR_TITULO_ELEITORAL_CANDIDATO', 
+        28:'NR_IDADE_DATA_POSSE',29:'CD_GENERO', 30:'DS_GENERO',31:'CD_GRAU_INSTRUCAO', 32:'DS_GRAU_INSTRUCAO',                  
+         33:'CD_ESTADO_CIVIL',34:'DS_ESTADO_CIVIL',  35:'CD_NACIONALIDADE',
+       36:'DS_NACIONALIDADE',37:'SG_UF_NASCIMENTO', 38:'CD_MUNICIPIO_NASCIMENTO',
+       39:'NM_MUNICIPIO_NASCIMENTO',  40:'NR_DESPESA_MAX_CAMPANHA',41:'CD_SIT_TOT_TURNO',
+       42:'DS_SIT_TOT_TURNO'})
+dados2006 = dados2006.query('DS_SITUACAO_CANDIDATURA == "DEFERIDO"')
+dados2006.columns
+dados2006.head(5)
+
+### Gráfico por gênero
+
+dados2006.groupby(['DS_GENERO']).size().plot(kind='pie',subplots=True,autopct='%.2f',colors = ['purple', 'gray'])
+plt.title('Candidaturas segundo gênero 2006')
+plt.xlabel('') 
+plt.ylabel('')
+plt.savefig('genero2006.jpeg',bbox_inches='tight',dpi=200)
+ 
+### Gráfico e tabela por estado
+
+dados2006.groupby(['NM_UE','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack().sort_values('FEMININO').plot(kind='bar',stacked=False,color = ['purple', 'gray'])
+plt.xlabel('Estado') 
+plt.ylabel('% dos candidatos') 
+plt.title('Candidaturas segundo gênero e estado 2006') 
+
+plt.savefig('EstadosXGenero2006.jpeg',bbox_inches='tight',dpi=200)
+
+tabela1 = (dados2006.groupby(['NM_UE','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack())
+print(tabela1.sort_values('FEMININO').round(2))
+
+### Gráfico e tabela por partido
+
+dados2006.groupby(['SG_PARTIDO','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack().sort_values('FEMININO').plot(kind='bar',stacked=False,color = ['purple', 'gray'])
+
+plt.xlabel('Partidos') 
+plt.ylabel('% dos candidatos') 
+plt.title('Candidaturas segundo gênero e partido 2006') 
+
+plt.savefig('PartidoXGenero2006.jpeg',bbox_inches='tight',dpi=150,orientation='portrait')
+tabela1 = (dados2006.groupby(['SG_PARTIDO','DS_GENERO']).size().groupby(level=0).apply(
+    lambda x: 100 * x / x.sum()
+).unstack())
+
+print(tabela1.sort_values('FEMININO').round(2))
+
